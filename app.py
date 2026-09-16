@@ -171,8 +171,6 @@ if retail_upload and raw_cost_upload:
                         "Retail File does not contain Column Q."
                     )
 
-                q_column_name = output_df.columns[16]
-
                 matched = retail_key.map(
                     raw_lookup["_eligible"]
                 )
@@ -197,22 +195,8 @@ if retail_upload and raw_cost_upload:
                     .astype(str)
                 )
 
-                populated_count = int(
-                    (output_df.iloc[:, 16] != "").sum()
-                )
-
                 st.success(
                     "Retail File processed successfully."
-                )
-
-                st.metric(
-                    "Column Q populated",
-                    populated_count,
-                )
-
-                st.write(
-                    f"Updated output column: "
-                    f"{q_column_name} (Column Q)"
                 )
 
                 csv_bytes = output_df.to_csv(
