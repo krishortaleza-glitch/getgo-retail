@@ -7,16 +7,10 @@ import streamlit as st
 
 st.set_page_config(
     page_title="GetGo – Retail",
-    page_icon="🛒",
     layout="wide",
 )
 
 st.title("GetGo – Retail")
-st.caption(
-    "Match Retail File (C + E) to Raw Vendor Store Cost (A + C), "
-    "then populate Retail Column Q when Raw Column L is greater than or equal to 1."
-)
-
 
 def read_uploaded_file(uploaded_file: st.runtime.uploaded_file_manager.UploadedFile) -> pd.DataFrame:
     """Read CSV or Excel uploads into a DataFrame."""
