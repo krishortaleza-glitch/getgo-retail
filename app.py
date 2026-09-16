@@ -14,7 +14,7 @@ st.set_page_config(
 st.title("GetGo – Retail")
 st.caption(
     "Match Retail File (C + E) to Raw Vendor Store Cost (A + C), "
-    "then populate Retail Column Q when Raw Column L equals 0."
+    "then populate Retail Column Q when Raw Column L is greater than or equal to 1."
 )
 
 
@@ -108,10 +108,10 @@ if retail_upload and raw_cost_upload:
                     get_column_by_position(raw_df, 2, "Raw Vendor Store Cost"),
                 )
 
-                # Raw condition: Column L == 0
+                # Raw condition: Column L >= 1
                 raw_condition = parse_numeric(
                     get_column_by_position(raw_df, 11, "Raw Vendor Store Cost")
-                ).eq(0)
+                ).ge(1)
 
                 # Raw value to populate Retail Column Q: Column N
                 raw_end_date = get_column_by_position(
@@ -145,7 +145,7 @@ if retail_upload and raw_cost_upload:
                 matched = retail_key.map(raw_lookup["_eligible"])
                 matched_value = retail_key.map(raw_lookup["_value"])
 
-                # Populate Q only when Raw Column L == 0.
+                # Populate Q only when Raw Column L >= 1.
                 output_df.iloc[:, 16] = matched_value.where(matched.eq(True), "")
 
                 # Ensure unmatched keys and ineligible rows are blank.
